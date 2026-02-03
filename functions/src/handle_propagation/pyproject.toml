@@ -1,0 +1,9 @@
+[project]
+name = "handle_propagation"
+version = "0.1.0"
+description = "handle attachment acceptance, tagging, route table association, and propagation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "boto3>=1.38.8",
+]

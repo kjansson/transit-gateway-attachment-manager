@@ -1,0 +1,9 @@
+[project]
+name = "send_approval_email"
+version = "0.1.0"
+description = "generates approval email content for Step Functions human approval task"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "boto3>=1.38.8",
+]

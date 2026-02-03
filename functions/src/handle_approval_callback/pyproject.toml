@@ -1,0 +1,9 @@
+[project]
+name = "handle_approval_callback"
+version = "0.1.0"
+description = "handles approval/rejection callbacks from API Gateway to Step Functions"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "boto3>=1.38.8",
+]
