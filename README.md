@@ -1,4 +1,4 @@
-# Transit Gateway Auto Accepter
+# Transit Gateway Attachment Manager
 
 This Terraform module automates the acceptance of Transit Gateway VPC attachments in AWS using Eventbridge and Step Functions.  
 
@@ -21,7 +21,7 @@ This module aims to extend and automate the attachment acceptance sequence but w
 
 ## Design
 
-The Auto Accepter runs as two Step Function state machines responsible for managing the accepting automation and guardrails, and the routing management for an newly accepted attachment.  
+The Attachment Manager runs as two Step Function state machines responsible for managing the accepting automation and guardrails, and the routing management for an newly accepted attachment.  
 
 The components of the Step Functions are 100% configurable and can be enabled/disabled depending on your needs.
 
