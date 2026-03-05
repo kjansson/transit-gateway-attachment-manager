@@ -34,6 +34,8 @@ The components of the Step Functions are 100% configurable and can be enabled/di
 The Accepter step function triggers on the event produced by a TGW attachment requesting attachment to the Transit Gateway.  
 In its default low/no configuration mode, it will simply accept the attachment, but optional guardrails before acceptance can be enabled;
 
+![Accepter](/img/accepter.png)
+
 <ul>
 <li>IAM validation: validate the requesting identitity. Allowed IAM principals can be limited by name patterns. Usage example;</li>
 <ul>
@@ -48,7 +50,7 @@ In its default low/no configuration mode, it will simply accept the attachment, 
 <li>Manual approval: human interaction. Implemented via SNS with email and approval link as default, but integration to Slack, Teams etc is supported by SNS.</li>
 </ul>
 
-![Accepter](/img/accepter.png)
+![Approval](/img/approval.png)
 
 ### Routing manager
 
