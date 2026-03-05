@@ -4,7 +4,6 @@ import logging
 from typing import Dict, Any
 import boto3
 from botocore.exceptions import ClientError
-from urllib.parse import unquote_plus
 
 # Configure logging
 log_level = os.environ.get('LOG_LEVEL', 'INFO').upper()
@@ -56,11 +55,9 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             ] if not value]
             raise ValueError(f"Missing required parameters: {', '.join(missing_params)}")
         
-        # URL decode the task token once (API Gateway may have already decoded it via VTL)
-        # Try both raw and decoded versions if the first fails
-        decoded_task_token = unquote_plus(task_token)
-        logger.debug(f'taskToken (decoded): {decoded_task_token}')
-        
+        # Note: API Gateway's VTL template ($input.params().querystring.get()) already
+        # URL-decodes query parameters, so no additional decoding is needed here.
+
         # Prepare message based on action
         email_list = ', '.join(email_addresses) if len(email_addresses) > 1 else email_addresses[0]
         if action == "approve":
@@ -74,24 +71,11 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         # Send task success to Step Functions
         stepfunctions = boto3.client('stepfunctions')
-        
-        # Try with decoded token first, then fall back to raw token if that fails
-        try:
-            stepfunctions.send_task_success(
-                output=json.dumps(message),
-                taskToken=decoded_task_token
-            )
-            logger.info('Successfully sent task success to Step Functions with decoded token')
-        except ClientError as e:
-            if 'InvalidToken' in str(e):
-                logger.warning('Decoded token failed, trying raw token')
-                stepfunctions.send_task_success(
-                    output=json.dumps(message),
-                    taskToken=task_token
-                )
-                logger.info('Successfully sent task success to Step Functions with raw token')
-            else:
-                raise
+        stepfunctions.send_task_success(
+            output=json.dumps(message),
+            taskToken=task_token
+        )
+        logger.info('Successfully sent task success to Step Functions')
         
         # Construct redirect URL to Step Functions console
         redirect_url = _construct_console_redirect_url(

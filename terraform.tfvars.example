@@ -1,0 +1,14 @@
+environment                = "dev"
+name_prefix                = "demo-tgw-auto-accept"
+allowed_principal_patterns = ["1234567890:admin"]
+ipam_pool_ids              = ["ipam-pool-83f8as2"] # Prod
+attachment_tag_key         = "AcceptedBy"
+attachment_tag_value       = "DemoTGWAutoAccept"
+# approval_email_addresses   = "kumpe82@gmail.com"
+
+ipam_association_tag_key = "association-rtb-id"
+ipam_propagation_tag_key = "propagation-rtb-ids"
+# default_associate_route_table_id  = "tgw-rtb-0bf31c929ed6c5ff9"
+# default_propagate_route_table_ids = ["tgw-rtb-0214df4bfb6214551", "tgw-rtb-0f8cc20a5e75894f3"]
+
+# ipam_pool_id = "ipam-pool-02cb3f33a94d16d52" # Non-prod
