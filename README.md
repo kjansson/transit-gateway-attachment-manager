@@ -1,6 +1,8 @@
 # Transit Gateway Attachment Manager
 
-This Terraform module automates the acceptance of Transit Gateway VPC attachments in AWS using Eventbridge and Step Functions.  
+This Terraform module automates the acceptance of Transit Gateway VPC attachments in AWS using Eventbridge and Step Functions.
+
+![Overview](/img/overview.png)
 
 ## Features
 
