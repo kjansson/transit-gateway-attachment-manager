@@ -1,7 +1,0 @@
-[project]
-name = "send_approval_slack"
-version = "0.1.0"
-description = "sends approval message to Slack for Step Functions human approval task"
-readme = "README.md"
-requires-python = ">=3.11"
-dependencies = []
