@@ -3,12 +3,14 @@
 This Terraform module automates the acceptance of Transit Gateway VPC attachments in AWS using Eventbridge and Step Functions.  
 
 ## Features
+
 - Automatically accepts Transit Gateway VPC attachments without using the limitations of the native TGW auto-accept feature.
 - Creates optional guardrails for acceptance based on AWS IPAM pools, IAM principals and manual approval workflows.
 - Enables automatic and dynamic route propagation to multiple routing domains.
 - Automatic tagging of attachments upon acceptance.
 
 ## Why?
+
 The native attachment sequence (automatic and manual) in Transit Gateway has several limitations;
 
 <ol>
@@ -17,7 +19,7 @@ The native attachment sequence (automatic and manual) in Transit Gateway has sev
 <li>Using the manual attachment sequence does not work well with a IaC/Gitops approach since it requires changes in multiple accounts, and lacks good notification options for being alerted to new attachment requests.</li>
 </ol>
 
-This module aims to extend and automate the attachment acceptance sequence but with built in guardrails for who and what is allowed to attach, and what routing domain they should belong to. 
+This module aims to extend and automate the attachment acceptance sequence but with built in guardrails for who and what is allowed to attach, and what routing domain they should belong to.
 
 ## Design
 
@@ -36,7 +38,7 @@ In its default low/no configuration mode, it will simply accept the attachment, 
 <li>Limit attachment requests to roles used in IaC workflows.</li>
 <li>Limit attachment requests to network admin roles.</li>
 </ul>
-<li>AWS IPAM validation: validate that the requesting VPC has a CIDR range allocated by a specific AWS IPAM pool. Usage example;</li> 
+<li>AWS IPAM validation: validate that the requesting VPC has a CIDR range allocated by a specific AWS IPAM pool. Usage example;</li>
 <ul>
 <li>Prevent VPC from requesting attachment to Transit Gateways in other environments or network segments.</li>
 <li>Prevent CIDR range overlap from attachments with CIDR ranges not managed in IPAM.</li>
@@ -54,4 +56,4 @@ When used with AWS IPAM it can even dynamically manage association and propagati
 This makes it possible to automate the separation of VPCs on a routing level within the same TGW.  
 As an example, VPCs using to a non-prod IPAM pool can associate and propagate to a non-prod routing domain, separated from VPCs using a production pool.
 
-![Routing Manager](/img/routing.png)# transit-gateway-attachment-manager
+![Routing Manager](/img/routing.png)
