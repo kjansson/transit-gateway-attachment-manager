@@ -15,10 +15,12 @@ This Terraform module automates the acceptance of Transit Gateway VPC attachment
 
 The native attachment sequence (automatic and manual) in Transit Gateway has several limitations;
 
-- The auto-accept attachment feature in TGW gives up too much control over who can attach. You are left relying on who you share your TGW with and trusting that the connecting VPCs are actually correctly configured
+- The auto-accept attachment feature in TGW gives up too much control over who can attach. You are left relying on who you share your TGW with and trusting that the connecting VPCs are actually correctly configured.
+
 ![Control](/img/control.png)
 
-- Using auto-accept effectively limits you to one routing domain, with all attachments associating and propagating to the same route tables
+- Using auto-accept effectively limits you to one routing domain, with all attachments associating and propagating to the same route tables.
+
 ![Routing Domains](/img/routing-domain-control.png)
 
 - Using the manual attachment sequence does not work well with a IaC/Gitops approach since it requires changes in multiple accounts, and lacks good notification options for being alerted to new attachment requests.
