@@ -15,11 +15,14 @@ This Terraform module automates the acceptance of Transit Gateway VPC attachment
 
 The native attachment sequence (automatic and manual) in Transit Gateway has several limitations;
 
-<ol>
-<li>The auto-accept attachment feature in TGW gives up too much control over who can attach. You are left relying on who you share your TGW with and trusting that the connecting VPCs are actually correctly configured.</li>
-<li>Using auto-accept effectively limits you to one routing domain, with all attachments associating and propagating to the same route tables.</li>
-<li>Using the manual attachment sequence does not work well with a IaC/Gitops approach since it requires changes in multiple accounts, and lacks good notification options for being alerted to new attachment requests.</li>
-</ol>
+- The auto-accept attachment feature in TGW gives up too much control over who can attach. You are left relying on who you share your TGW with and trusting that the connecting VPCs are actually correctly configured
+![Control](/img/control.png)
+
+- Using auto-accept effectively limits you to one routing domain, with all attachments associating and propagating to the same route tables
+![Routing Domains](/img/routing-domain-control.png)
+
+- Using the manual attachment sequence does not work well with a IaC/Gitops approach since it requires changes in multiple accounts, and lacks good notification options for being alerted to new attachment requests.
+![Manual Process](/img/manual-process-2.png)
 
 This module aims to extend and automate the attachment acceptance sequence but with built in guardrails for who and what is allowed to attach, and what routing domain they should belong to.
 
@@ -36,19 +39,14 @@ In its default low/no configuration mode, it will simply accept the attachment, 
 
 ![Accepter](/img/accepter.png)
 
-<ul>
-<li>IAM validation: validate the requesting identitity. Allowed IAM principals can be limited by name patterns. Usage example;</li>
-<ul>
-<li>Limit attachment requests to roles used in IaC workflows.</li>
-<li>Limit attachment requests to network admin roles.</li>
-</ul>
-<li>AWS IPAM validation: validate that the requesting VPC has a CIDR range allocated by a specific AWS IPAM pool. Usage example;</li>
-<ul>
-<li>Prevent VPC from requesting attachment to Transit Gateways in other environments or network segments.</li>
-<li>Prevent CIDR range overlap from attachments with CIDR ranges not managed in IPAM.</li>
-</ul>
-<li>Manual approval: human interaction. Implemented via SNS with email and approval link as default, but integration to Slack, Teams etc is supported by SNS.</li>
-</ul>
+- IAM validation: validate the requesting identitity. Allowed IAM principals can be limited by name patterns. Usage example;
+  - Limit attachment requests to roles used in IaC workflows
+  - Limit attachment requests to network admin roles
+
+- AWS IPAM validation: validate that the requesting VPC has a CIDR range allocated by a specific AWS IPAM pool. Usage example;
+  - Prevent VPC from requesting attachment to Transit Gateways in other environments or network segments- Prevent CIDR range overlap from attachments with CIDR ranges not managed in IPAM
+
+- Manual approval: human interaction. Implemented via SNS with email and approval link as default, but integration to Slack, Teams etc is supported by SNS
 
 ![Approval](/img/approval.png)
 
