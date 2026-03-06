@@ -133,30 +133,34 @@ class TestHandleApprovalCallbackHandler:
             # Reload module again to restore original state
             importlib.reload(handle_approval_callback.handler)
     
-    def test_url_encoded_task_token(self):
-        """Test handling of URL-encoded task token."""
+    def test_task_token_with_special_characters(self):
+        """Test handling of task token with base64 special characters.
+
+        API Gateway's VTL template already URL-decodes query parameters,
+        so the Lambda receives the decoded token directly.
+        """
         event = {
             'queryStringParameters': {
                 'action': 'approve',
-                'taskToken': 'test%2Btask%2Ftoken%3Dwith%26special',  # URL encoded
+                'taskToken': 'test+task/token=with&special',  # Already decoded by API GW
                 'sm': 'test-state-machine',
                 'ex': 'test-execution'
             }
         }
-        
+
         context = MagicMock()
         context.invoked_function_arn = 'arn:aws:lambda:us-east-1:123456789012:function:test-function'
-        
+
         with patch('boto3.client') as mock_boto_client:
             mock_sfn = MagicMock()
             mock_boto_client.return_value = mock_sfn
-            
+
             result = lambda_handler(event, context)
-            
-            # Verify the task token was URL decoded before sending to Step Functions
+
+            # Verify the task token is passed through as-is (no double-decoding)
             mock_sfn.send_task_success.assert_called_once_with(
                 output='{"Status": "Approved! Task approved by test@example.com"}',
-                taskToken='test+task/token=with&special'  # Should be decoded
+                taskToken='test+task/token=with&special'
             )
     
     def test_missing_query_parameters(self):

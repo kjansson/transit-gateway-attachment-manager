@@ -1,9 +1,3 @@
-variable "additional_ipam_regions" {
-  description = "Additional regions for IPAM to monitor (beyond current region)"
-  type        = list(string)
-  default     = []
-}
-
 variable "environment" {
   type        = string
   description = "The environment for the resources"
@@ -73,17 +67,6 @@ variable "ipam_pool_ids" {
   default     = []
 }
 
-variable "tgwa_additional_tag_key" {
-  description = "Additional tag key to be added to the TGW attachment"
-  type        = string
-  default     = ""
-}
-
-variable "tgwa_additional_tag_value" {
-  description = "Additional tag value to be added to the TGW attachment"
-  type        = string
-  default     = ""
-}
 variable "ipam_association_tag_key" {
   description = "Tag key to retrieve association route table ID from the IPAM pool"
   type        = string

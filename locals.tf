@@ -1,5 +1,4 @@
 locals {
-  account_id = data.aws_caller_identity.current.account_id
   # Get the name prefix
   name_prefix = format("%s-%s", var.environment, var.name_prefix)
   # Merge common tags with additional tags if any
@@ -199,7 +198,7 @@ locals {
       "Type" : "Task",
       "Resource" : "arn:aws:states:::sns:publish",
       "Arguments" : {
-        "TopicArn" : "${aws_sns_topic.tgw_notifications.arn}",
+        "TopicArn" : aws_sns_topic.tgw_notifications.arn,
         "Message" : {
           "message" : "Success"
         }
@@ -213,7 +212,7 @@ locals {
       "Type" : "Task",
       "Resource" : "arn:aws:states:::sns:publish",
       "Arguments" : {
-        "TopicArn" : "${aws_sns_topic.tgw_notifications.arn}",
+        "TopicArn" : aws_sns_topic.tgw_notifications.arn,
         "Message" : {
           "message" : "Failure"
         }
@@ -450,7 +449,7 @@ locals {
       "Type" : "Task",
       "Resource" : "arn:aws:states:::sns:publish",
       "Arguments" : {
-        "TopicArn" : "${aws_sns_topic.tgw_notifications.arn}",
+        "TopicArn" : aws_sns_topic.tgw_notifications.arn,
         "Message" : {
           "message" : "Routing Manager - Success"
         }
@@ -461,7 +460,7 @@ locals {
       "Type" : "Task",
       "Resource" : "arn:aws:states:::sns:publish",
       "Arguments" : {
-        "TopicArn" : "${aws_sns_topic.tgw_notifications.arn}",
+        "TopicArn" : aws_sns_topic.tgw_notifications.arn,
         "Message" : {
           "message" : "Routing Manager - Failed"
         }
